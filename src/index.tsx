@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./Components/App";
-import GlobalStyle from "./Styles/GlobalStyle";
-import firebase from "./firebase";
+import App from "Components/App";
+import GlobalStyle from "Styles/GlobalStyle";
+import firebase from "firebaseApp";
 
 const root = document.getElementById("root") as HTMLDivElement;
 
