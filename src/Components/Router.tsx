@@ -6,7 +6,7 @@ import firebase from "firebase";
 
 type currentUser = firebase.User | null;
 
-const AppRouter: React.FC<{ isLoggedIn: currentUser }> = (isLoggedIn) => {
+const AppRouter: React.FC<{ isLoggedIn: currentUser }> = ({ isLoggedIn }) => {
   return (
     <Router>
       <Switch>
