@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ManifestPlugin = require("webpack-manifest-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
 const path = require("path");
 const dotenv = require("dotenv");
@@ -54,6 +55,7 @@ module.exports = (webpackEnv) => {
       ],
     },
     resolve: {
+      plugins: [new TsconfigPathsPlugin()],
       extensions: [".tsx", ".ts", ".js"],
     },
     plugins: [
