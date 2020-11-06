@@ -4,9 +4,7 @@ import Home from "Routes/Home";
 import Auth from "Routes/Auth";
 import firebase from "firebase";
 
-type currentUser = firebase.User | null;
-
-const AppRouter: React.FC<{ isLoggedIn: currentUser }> = ({ isLoggedIn }) => {
+const AppRouter: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
   return (
     <Router>
       <Switch>
