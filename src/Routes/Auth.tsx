@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { useState } from "react";
 import { authService, firebaseInstance } from "firebaseApp";
 
 const Auth: React.FC = () => {
@@ -7,7 +7,7 @@ const Auth: React.FC = () => {
   const [newAccount, setNewAccount] = useState(true);
   const [error, setError] = useState("");
 
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
       target: { name, value },
     } = event;
@@ -22,7 +22,7 @@ const Auth: React.FC = () => {
     }
   };
 
-  const onSubmit = async (event: FormEvent) => {
+  const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
       let data;
