@@ -1,9 +1,15 @@
 import React, { useState } from "react";
+import { dbService } from "firebaseApp";
 
 const Home: React.FC = () => {
   const [tweet, setTweet] = useState("");
-  const onSubmit = (event: React.FormEvent) => {
+  const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    await dbService.collection("tweets").add({
+      tweet,
+      createdAt: Date.now(),
+    });
+    setTweet("");
   };
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
