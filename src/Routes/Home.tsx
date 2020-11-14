@@ -12,19 +12,15 @@ const Home: React.FC<{ userObj: firebase.User | null }> = ({ userObj }) => {
   const [tweet, setTweet] = useState("");
   const [tweets, setTweets] = useState<Tweet[]>([]);
 
-  const getTweets = async () => {
-    const dbTweets = await dbService.collection("tweets").get();
-    dbTweets.forEach((document) => {
-      const newTweetObject: Tweet = {
-        id: document.id,
-        ...document.data(),
-      };
-      setTweets((prev) => [newTweetObject, ...prev]);
-    });
-  };
-
   useEffect(() => {
-    getTweets();
+    dbService.collection("tweets").onSnapshot((snapshot) => {
+      const tweetsArray = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      setTweets(tweetsArray);
+    });
   }, []);
 
   const onSubmit = async (event: React.FormEvent) => {
