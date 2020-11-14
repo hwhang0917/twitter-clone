@@ -23,6 +23,15 @@ module.exports = (webpackEnv) => {
         ? "static/js/[name].[contenthash:8].js"
         : webpackEnv.development && "static/js/bundle.js",
     },
+    optimization: {
+      minimize: webpackEnv.production,
+      splitChunks: {
+        chunks: "all",
+      },
+      runtimeChunk: {
+        name: (entrypoint) => `runtime-${entrypoint.name}`,
+      },
+    },
     module: {
       rules: [
         {
