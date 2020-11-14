@@ -1,16 +1,15 @@
 import React from "react";
-import {
-  HashRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-} from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import firebase from "firebase";
 import Home from "Routes/Home";
 import Auth from "Routes/Auth";
 import Profile from "Routes/Profile";
 import Navigation from "Components/Navigation";
 
-const AppRouter: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
+const AppRouter: React.FC<{
+  isLoggedIn: boolean;
+  userObj: firebase.User | null;
+}> = ({ isLoggedIn, userObj }) => {
   return (
     <Router>
       {isLoggedIn && <Navigation />}
@@ -18,7 +17,7 @@ const AppRouter: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
         {isLoggedIn ? (
           <>
             <Route exact path="/">
-              <Home />
+              <Home userObj={userObj} />
             </Route>
             <Route exact path="/profile">
               <Profile />
