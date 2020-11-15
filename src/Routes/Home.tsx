@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import firebase from "firebase";
 import { dbService } from "firebaseApp";
+import Tweet from "Components/Tweet";
 
 type Tweet = {
   id: string;
   message?: string;
   createdAt?: number;
+  creatorId?: string;
 };
 
 const Home: React.FC<{ userObj: firebase.User | null }> = ({ userObj }) => {
@@ -28,7 +30,7 @@ const Home: React.FC<{ userObj: firebase.User | null }> = ({ userObj }) => {
     await dbService.collection("tweets").add({
       message: tweet,
       createdAt: Date.now(),
-      cretorId: userObj?.uid,
+      creatorId: userObj?.uid,
     });
     setTweet("");
   };
@@ -54,10 +56,11 @@ const Home: React.FC<{ userObj: firebase.User | null }> = ({ userObj }) => {
       </form>
       <div>
         {tweets.map((tweet) => (
-          <div key={tweet.id}>
-            <h4>{tweet.message}</h4>
-            <p>{tweet.createdAt}</p>
-          </div>
+          <Tweet
+            key={tweet.id}
+            tweetObj={tweet}
+            isOwner={tweet.creatorId === userObj?.uid}
+          />
         ))}
       </div>
     </div>
