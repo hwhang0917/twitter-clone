@@ -43,32 +43,32 @@ const Tweet: React.FC<{ tweetObj: TweetObject; isOwner: boolean }> = ({
     setNewTweet(value);
   };
 
+  if (editing) {
+    return (
+      <TweetContainer>
+        <form onSubmit={onSubmit}>
+          <input
+            type="text"
+            placeholder="What's on your mind?"
+            value={newTweet}
+            required
+            onChange={onChange}
+          />
+          <input type="submit" value="Update Tweet" />
+        </form>
+        <button onClick={toggleEditing}>Cancel</button>
+      </TweetContainer>
+    );
+  }
+
   return (
     <TweetContainer>
-      {editing ? (
+      <h4>{tweetObj.message}</h4>
+      <p>{tweetObj.createdAt}</p>
+      {isOwner && (
         <>
-          <form onSubmit={onSubmit}>
-            <input
-              type="text"
-              placeholder="What's on your mind?"
-              value={newTweet}
-              required
-              onChange={onChange}
-            />
-            <input type="submit" value="Update Tweet" />
-          </form>
-          <button onClick={toggleEditing}>Cancel</button>
-        </>
-      ) : (
-        <>
-          <h4>{tweetObj.message}</h4>
-          <p>{tweetObj.createdAt}</p>
-          {isOwner && (
-            <>
-              <button onClick={onDeleteClick}>Delete Tweet</button>
-              <button onClick={toggleEditing}>Edit Tweet</button>
-            </>
-          )}{" "}
+          <button onClick={onDeleteClick}>Delete Tweet</button>
+          <button onClick={toggleEditing}>Edit Tweet</button>
         </>
       )}
     </TweetContainer>

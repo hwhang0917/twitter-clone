@@ -11,7 +11,7 @@ type Tweet = {
 };
 
 const Home: React.FC<{ userObj: firebase.User | null }> = ({ userObj }) => {
-  const [tweet, setTweet] = useState("");
+  const [message, setMessage] = useState("");
   const [tweets, setTweets] = useState<Tweet[]>([]);
 
   useEffect(() => {
@@ -28,18 +28,18 @@ const Home: React.FC<{ userObj: firebase.User | null }> = ({ userObj }) => {
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     await dbService.collection("tweets").add({
-      message: tweet,
+      message,
       createdAt: Date.now(),
       creatorId: userObj?.uid,
     });
-    setTweet("");
+    setMessage("");
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
       target: { value },
     } = event;
-    setTweet(value);
+    setMessage(value);
   };
 
   return (
@@ -47,7 +47,7 @@ const Home: React.FC<{ userObj: firebase.User | null }> = ({ userObj }) => {
       <form onSubmit={onSubmit}>
         <input
           type="text"
-          value={tweet}
+          value={message}
           onChange={onChange}
           placeholder="What's on your mind?"
           maxLength={120}
