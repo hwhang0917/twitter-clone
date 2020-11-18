@@ -2,7 +2,7 @@ import React from "react";
 import { authService } from "firebaseApp";
 import { useHistory } from "react-router-dom";
 
-const Profile: React.FC = () => {
+function Profile() {
   const history = useHistory();
 
   const onLogOutClick = () => {
@@ -15,6 +15,6 @@ const Profile: React.FC = () => {
       <button onClick={onLogOutClick}>Log Out</button>
     </>
   );
-};
+}
 
 export default Profile;

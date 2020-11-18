@@ -15,10 +15,12 @@ type TweetObject = {
   creatorId?: string;
 };
 
-const Tweet: React.FC<{ tweetObj: TweetObject; isOwner: boolean }> = ({
-  tweetObj,
-  isOwner,
-}) => {
+type _Props = {
+  tweetObj: TweetObject;
+  isOwner: boolean;
+};
+
+function Tweet({ tweetObj, isOwner }: _Props) {
   const [editing, setEditing] = useState(false);
   const [newTweet, setNewTweet] = useState(tweetObj.message);
 
@@ -73,6 +75,6 @@ const Tweet: React.FC<{ tweetObj: TweetObject; isOwner: boolean }> = ({
       )}
     </TweetContainer>
   );
-};
+}
 
 export default Tweet;

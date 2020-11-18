@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { authService, firebaseInstance } from "firebaseApp";
 
-const Auth: React.FC = () => {
+function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [newAccount, setNewAccount] = useState(true);
@@ -97,6 +97,6 @@ const Auth: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Auth;

@@ -3,7 +3,7 @@ import AppRouter from "Components/Router";
 import firebase from "firebase";
 import { authService } from "firebaseApp";
 
-const App: React.FC = () => {
+function App() {
   const [init, setInit] = useState(false);
   const [userObj, setUserObject] = useState<firebase.User | null>(null);
 
@@ -26,6 +26,6 @@ const App: React.FC = () => {
       <footer>&copy; {new Date().getFullYear()} Twitter Clone</footer>
     </>
   );
-};
+}
 
 export default App;

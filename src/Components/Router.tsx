@@ -6,10 +6,12 @@ import Auth from "Routes/Auth";
 import Profile from "Routes/Profile";
 import Navigation from "Components/Navigation";
 
-const AppRouter: React.FC<{
+type _Props = {
   isLoggedIn: boolean;
   userObj: firebase.User | null;
-}> = ({ isLoggedIn, userObj }) => {
+};
+
+function AppRouter({ isLoggedIn, userObj }: _Props) {
   return (
     <Router>
       {isLoggedIn && <Navigation />}
@@ -33,6 +35,6 @@ const AppRouter: React.FC<{
       </Switch>
     </Router>
   );
-};
+}
 
 export default AppRouter;
