@@ -1,19 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { dbService } from "firebaseApp";
+import { TweetObject } from "@types";
 
 const TweetContainer = styled.div`
   padding: 15px;
-  margin: 10px;
   border: 1px solid black;
 `;
 
-type TweetObject = {
-  id: string;
-  message?: string;
-  createdAt?: number;
-  creatorId?: string;
-};
+// ---- STYLE END ----
 
 type _Props = {
   tweetObj: TweetObject;

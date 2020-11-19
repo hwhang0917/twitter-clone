@@ -4,22 +4,16 @@ import firebase from "firebase";
 import { dbService } from "firebaseApp";
 import Tweet from "Components/Tweet";
 import TweetForm from "Components/TweetForm";
+import { TweetObject } from "@types";
 
 const Container = styled.div``;
-
-type Tweet = {
-  id: string;
-  message?: string;
-  createdAt?: number;
-  creatorId?: string;
-};
 
 type _Props = {
   userObj: firebase.User | null;
 };
 
 function Home({ userObj }: _Props) {
-  const [tweets, setTweets] = useState<Tweet[]>([]);
+  const [tweets, setTweets] = useState<TweetObject[]>([]);
 
   useEffect(() => {
     dbService.collection("tweets").onSnapshot((snapshot) => {
