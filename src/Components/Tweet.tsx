@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { dbService } from "firebaseApp";
+import { dbService, storageService } from "firebaseApp";
 import { TweetObject } from "@types";
 
 const TweetContainer = styled.div`
@@ -22,18 +22,26 @@ function Tweet({ tweetObj, isOwner }: _Props) {
 
   const onDeleteClick = async () => {
     const ok = window.confirm("Are you sure you want to delete this tweet?");
-    console.log(ok);
     if (ok) {
-      await dbService.doc(`tweets/${tweetObj.id}`).delete();
+      try {
+        await dbService.doc(`tweets/${tweetObj.id}`).delete();
+        if (tweetObj.attachmentUrl) {
+          await storageService.refFromURL(tweetObj.attachmentUrl).delete();
+        }
+      } catch (error) {
+        alert(error);
+      }
     }
   };
 
   const toggleEditing = () => setEditing((prev) => !prev);
+
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     await dbService.doc(`tweets/${tweetObj.id}`).update({ message: newTweet });
     setEditing(false);
   };
+
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const {
       target: { value },
@@ -61,7 +69,9 @@ function Tweet({ tweetObj, isOwner }: _Props) {
 
   return (
     <TweetContainer>
-      <img src={tweetObj.attachmentUrl} alt="tweet photo" />
+      {tweetObj.attachmentUrl && (
+        <img src={tweetObj.attachmentUrl} alt="tweet photo" />
+      )}
       <h4>{tweetObj.message}</h4>
       <p>{tweetObj.createdAt}</p>
       {isOwner && (
