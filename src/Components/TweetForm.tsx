@@ -1,15 +1,29 @@
 import React, { useRef, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import styled from "styled-components";
 import firebase from "firebase";
-import { dbService } from "firebaseApp";
+import { dbService, storageService } from "firebaseApp";
 
-const StyledForm = styled.form``;
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+
+  border: 1px solid black;
+
+  & > * {
+    margin-bottom: 15px;
+  }
+`;
 const PreviewBox = styled.div``;
 const Preview = styled.img``;
-const Submit = styled.input``;
 const ClearButton = styled.button``;
+const MessageInput = styled.input`
+  font-size: 2em;
+`;
 const FileInput = styled.input``;
-const MessageInput = styled.input``;
+const Submit = styled.input``;
 
 // ---- STYLE END ----
 
@@ -19,21 +33,35 @@ type _Props = {
 
 function TweetForm({ userObj }: _Props) {
   const [message, setMessage] = useState("");
-  const [attachment, setAttachment] = useState<FileReader["result"]>(null);
+  const [attachment, setAttachment] = useState<string>("");
   const fileInput = useRef<HTMLInputElement>(null);
 
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      await dbService.collection("tweets").add({
+      let attachmentUrl = "";
+      if (attachment) {
+        const attachmentRef = storageService
+          .ref()
+          .child(`${userObj?.uid}/${uuidv4()}`);
+        const response = await attachmentRef.putString(attachment, "data_url");
+        attachmentUrl = await response.ref.getDownloadURL();
+      }
+      const tweetObj = {
         message,
         createdAt: Date.now(),
         creatorId: userObj?.uid,
-      });
+        attachmentUrl,
+      };
+      await dbService.collection("tweets").add(tweetObj);
     } catch (error) {
       alert(`Tweet Upload Failed: ${error}`);
     } finally {
       setMessage("");
+      setAttachment("");
+      if (fileInput.current) {
+        fileInput.current.value = "";
+      }
     }
   };
 
@@ -57,12 +85,14 @@ function TweetForm({ userObj }: _Props) {
     }
 
     fileReader.onloadend = () => {
-      setAttachment(fileReader.result);
+      if (fileReader.result) {
+        setAttachment(fileReader.result?.toString());
+      }
     };
   };
 
   const onClearAttachment = () => {
-    setAttachment(null);
+    setAttachment("");
 
     if (fileInput.current) {
       fileInput.current.value = "";
@@ -80,7 +110,12 @@ function TweetForm({ userObj }: _Props) {
             </ClearButton>
           </PreviewBox>
         )}
-        <MessageInput type="text" onChange={onMessageChange} />
+        <MessageInput
+          type="text"
+          onChange={onMessageChange}
+          placeholder="What's on your mind?"
+          value={message}
+        />
         <FileInput
           type="file"
           accept="image/*"

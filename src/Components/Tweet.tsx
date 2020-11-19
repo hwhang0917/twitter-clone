@@ -60,6 +60,7 @@ function Tweet({ tweetObj, isOwner }: _Props) {
 
   return (
     <TweetContainer>
+      <img src={tweetObj.attachmentUrl} alt="tweet photo" />
       <h4>{tweetObj.message}</h4>
       <p>{tweetObj.createdAt}</p>
       {isOwner && (
