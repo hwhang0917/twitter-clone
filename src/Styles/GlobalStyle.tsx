@@ -15,6 +15,9 @@ const GlobalStyle = createGlobalStyle`
     /* Global body style */
     body {
         font-family: "Noto Sans KR", sans-serif;
+        color: #ecf0f1;
+        background: #2c3e50;
+        padding: 15px;
     }
 `;
 
