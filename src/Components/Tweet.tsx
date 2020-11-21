@@ -3,11 +3,7 @@ import styled from "styled-components";
 import { dbService, storageService } from "firebaseApp";
 import { TweetObject } from "@types";
 
-const TweetContainer = styled.div`
-  padding: 15px;
-  margin: 10px 0;
-  border: 1px solid black;
-`;
+const TweetContainer = styled.div``;
 
 // ---- STYLE END ----
 

@@ -5,7 +5,7 @@ import { authService } from "firebaseApp";
 import Loading from "./Loading";
 
 function App() {
-  const [init, setInit] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [userObj, setUserObject] = useState<firebase.User | null>(null);
 
   useEffect(() => {
@@ -13,20 +13,14 @@ function App() {
       if (user) {
         setUserObject(user);
       }
-      setInit(true);
+      setLoading(false);
     });
   }, []);
 
-  return (
-    <>
-      {init ? (
-        <AppRouter isLoggedIn={Boolean(userObj)} userObj={userObj} />
-      ) : (
-        <Loading />
-      )}
-      <footer>&copy; {new Date().getFullYear()} Twitter Clone</footer>
-    </>
-  );
+  if (loading) {
+    return <Loading />;
+  }
+  return <AppRouter isLoggedIn={Boolean(userObj)} userObj={userObj} />;
 }
 
 export default App;

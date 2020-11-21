@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import { authService, firebaseInstance } from "firebaseApp";
+
+// ---- STYLE END ----
 
 function Auth() {
   const [email, setEmail] = useState("");
@@ -36,7 +39,6 @@ function Auth() {
         // log in
         data = await authService.signInWithEmailAndPassword(email, password);
       }
-      console.log(data);
     } catch (error) {
       setError(error.message);
     }

@@ -1,4 +1,5 @@
 import React from "react";
+import firebase from "firebase";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -8,13 +9,15 @@ const NavContainer = styled.nav`
 const MenuList = styled.ul`
   list-style: none;
   padding: 0;
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-end;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 `;
 const MenuItem = styled.li`
   margin: 0;
   font-size: 1.3em;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 `;
 const Logo = styled.img`
   width: 100px;
@@ -35,7 +38,11 @@ const ExternalLink = styled.a`
 
 // ---- STYLE END ----
 
-function Navigation() {
+type _Props = {
+  userObj: firebase.User | null;
+};
+
+function Navigation({ userObj }: _Props) {
   return (
     <NavContainer>
       <MenuList>
@@ -54,7 +61,8 @@ function Navigation() {
         </MenuItem>
         <MenuItem>
           <InternalLink to="/profile" replace>
-            Profile
+            <i className="fas fa-user-circle" />{" "}
+            <span>{userObj?.displayName}'s Profile</span>
           </InternalLink>
         </MenuItem>
       </MenuList>

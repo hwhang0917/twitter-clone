@@ -14,7 +14,7 @@ type _Props = {
 function AppRouter({ isLoggedIn, userObj }: _Props) {
   return (
     <Router>
-      {isLoggedIn && <Navigation />}
+      {isLoggedIn && <Navigation userObj={userObj} />}
       <Switch>
         {isLoggedIn ? (
           <>
@@ -22,7 +22,7 @@ function AppRouter({ isLoggedIn, userObj }: _Props) {
               <Home userObj={userObj} />
             </Route>
             <Route exact path="/profile">
-              <Profile />
+              <Profile userObj={userObj} />
             </Route>
           </>
         ) : (

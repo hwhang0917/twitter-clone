@@ -1,6 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
+const Wrapper = styled.section`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
 const LoadContainer = styled.div`
   display: inline-block;
   position: relative;
@@ -62,7 +69,6 @@ const LoadContainer = styled.div`
     }
   }
 `;
-
 const LoadDot = styled.div`
   position: absolute;
   width: 16px;
@@ -71,22 +77,26 @@ const LoadDot = styled.div`
   background: #00acee;
   animation: lds-grid 1.2s linear infinite;
 `;
+const LoadMessage = styled.h2``;
 
 // ---- STYLE END ----
 
 function Loading() {
   return (
-    <LoadContainer>
-      <LoadDot></LoadDot>
-      <LoadDot></LoadDot>
-      <LoadDot></LoadDot>
-      <LoadDot></LoadDot>
-      <LoadDot></LoadDot>
-      <LoadDot></LoadDot>
-      <LoadDot></LoadDot>
-      <LoadDot></LoadDot>
-      <LoadDot></LoadDot>
-    </LoadContainer>
+    <Wrapper>
+      <LoadContainer>
+        <LoadDot></LoadDot>
+        <LoadDot></LoadDot>
+        <LoadDot></LoadDot>
+        <LoadDot></LoadDot>
+        <LoadDot></LoadDot>
+        <LoadDot></LoadDot>
+        <LoadDot></LoadDot>
+        <LoadDot></LoadDot>
+        <LoadDot></LoadDot>
+      </LoadContainer>
+      <LoadMessage>LOADING</LoadMessage>
+    </Wrapper>
   );
 }
 

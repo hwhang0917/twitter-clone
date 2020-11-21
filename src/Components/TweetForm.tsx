@@ -8,22 +8,66 @@ const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 10px;
-
-  border: 1px solid black;
-
   & > * {
     margin-bottom: 15px;
   }
 `;
-const PreviewBox = styled.div``;
-const Preview = styled.img``;
-const ClearButton = styled.button``;
-const MessageInput = styled.input`
-  font-size: 2em;
+const PreviewBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 `;
-const FileInput = styled.input``;
-const Submit = styled.input``;
+const PreviewTitle = styled.h2`
+  margin: 15px 0;
+`;
+const Preview = styled.img``;
+const ClearButton = styled.button`
+  all: unset;
+  margin: 15px auto;
+  border-radius: 2em;
+  display: flex;
+  cursor: pointer;
+  color: #e74c3c;
+`;
+const MessageInput = styled.input`
+  font-family: "Roboto", sans-serif;
+  color: #333;
+  font-size: 1.2rem;
+  margin: 15px auto;
+  padding: 1.5rem 2rem;
+  border-radius: 0.2rem;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  width: 90%;
+  display: block;
+  border-bottom: 0.3rem solid transparent;
+  transition: all 0.3s;
+`;
+const FileLabel = styled.label`
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  border-radius: 2em;
+  display: flex;
+  padding: 6px 12px;
+  cursor: pointer;
+`;
+const FileInput = styled.input`
+  display: none;
+`;
+const Submit = styled.input`
+  all: unset;
+  margin: 15px auto;
+  background: #00acee;
+  border-radius: 2em;
+  display: flex;
+  cursor: pointer;
+  padding: 15px 30px;
+
+  &:hover {
+    background: #3498db;
+  }
+`;
 
 // ---- STYLE END ----
 
@@ -104,9 +148,10 @@ function TweetForm({ userObj }: _Props) {
       <StyledForm id="tweet__form" onSubmit={onSubmit}>
         {attachment && (
           <PreviewBox>
+            <PreviewTitle>Image Preview</PreviewTitle>
             <Preview src={attachment?.toString()} alt="image preview" />
             <ClearButton onClick={onClearAttachment}>
-              Clear Attachment
+              <i className="fas fa-times" aria-label="Remove image" />
             </ClearButton>
           </PreviewBox>
         )}
@@ -115,8 +160,14 @@ function TweetForm({ userObj }: _Props) {
           onChange={onMessageChange}
           placeholder="What's on your mind?"
           value={message}
+          required
         />
+        <FileLabel htmlFor="file-upload">
+          <i className="fa fa-cloud-upload" />
+          <span>Upload Image</span>
+        </FileLabel>
         <FileInput
+          id="file-upload"
           type="file"
           accept="image/*"
           onChange={onFileChange}
