@@ -16,14 +16,18 @@ function Home({ userObj }: _Props) {
   const [tweets, setTweets] = useState<TweetObject[]>([]);
 
   useEffect(() => {
-    dbService.collection("tweets").onSnapshot((snapshot) => {
-      const tweetsArray = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+    const unsubscribe = dbService
+      .collection("tweets")
+      .onSnapshot((snapshot) => {
+        const tweetsArray = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
 
-      setTweets(tweetsArray);
-    });
+        setTweets(tweetsArray);
+      });
+
+    return () => unsubscribe();
   }, []);
 
   return (
