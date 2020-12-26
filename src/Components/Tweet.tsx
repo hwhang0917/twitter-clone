@@ -70,6 +70,7 @@ function Tweet({ tweetObj, isOwner }: _Props) {
       )}
       <h4>{tweetObj.message}</h4>
       <p>{tweetObj.createdAt}</p>
+      <p>{tweetObj.creatorId}</p>
       {isOwner && (
         <>
           <button onClick={onDeleteClick}>Delete Tweet</button>
